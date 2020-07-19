@@ -22,11 +22,39 @@ var budgetController = (function(){
         totals : {
             exp : 0,
             inc : 0
-        } sadasd
+        } 
     }
     return {
-        addItem : function(){
+        addItem : function(type , des , val){
+            var newItem , Id;
+            
+            //Creating new Id
+            if(data.allItems[type].length > 0){
+                Id = data.allItems[type][data.allItems[type].length-1].id + 1;
+            }
+            else{
+                Id = 0
+            }
+            
+        
+            //Creating new objects from the contructor on the basic of 'exp' or 'inc' type
+            if(type === 'exp'){
+                newItem = new Expense(Id, des , val);
+            }
+            else if (type === 'inc'){
+                newItem = new Income(Id , des , val) ;
+            }
 
+            //Adding new item to the data structure
+            data.allItems[type].push(newItem);
+
+            // return newItem
+            return newItem ;
+
+        },
+
+        testing : function(){
+            console.log(data);
         }
     }
 })();
@@ -78,13 +106,14 @@ var controller = (function(bgtCtrl , UiCtrl){
     
 
     var ctrlAddItem = function(){
-        
+        var input , newItem ;
 
         // 1 . Get item from the input field 
-        var input = UiCtrl.getInput();
+         input = UiCtrl.getInput();
        
 
         // 2. Add item to buget contoller
+         newItem = bgtCtrl.addItem(input.getType, input.getDescription , input.getValue);
 
         // 3. Add item to UI 
 
@@ -96,10 +125,12 @@ var controller = (function(bgtCtrl , UiCtrl){
     //Function initiated at the begining
     return{
         init : function(){
-            console.log('Function has started');
+            console.log('Application  has started');
             EventListeners();
         }
     }
     
 
 })(budgetController , UiController);
+
+controller.init();
