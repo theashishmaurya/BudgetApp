@@ -22,11 +22,11 @@ var budgetController = (function(){
         totals : {
             exp : 0,
             inc : 0
-        }
+        } sadasd
     }
     return {
         addItem : function(){
-            
+
         }
     }
 })();
