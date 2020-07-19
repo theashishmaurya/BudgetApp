@@ -1,8 +1,35 @@
 // Budget controller
 var budgetController = (function(){
-    // Some Code
-})
-();
+
+    //Function contructors for Expense and Income
+    var Expense  = function(id , description , value){
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    };
+    var Income = function(id , description , value){
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    };
+
+    //Common data structure to store the data
+    var data = {
+        allItems : {
+            exp : [],
+            inc : []
+        },
+        totals : {
+            exp : 0,
+            inc : 0
+        }
+    }
+    return {
+        addItem : function(){
+            
+        }
+    }
+})();
 
 // Ui Controller
 var UiController = (function(){
@@ -38,13 +65,24 @@ var UiController = (function(){
 
 // Global App Controller
 var controller = (function(bgtCtrl , UiCtrl){
-    var Dom = UiCtrl.PublicDomString();
+    // Function handling all the event listeners
+    var EventListeners = function (){
+        var Dom = UiCtrl.PublicDomString();
+        document.querySelector(Dom.btn).addEventListener('click', ctrlAddItem);
+        document.addEventListener('keypress' , (event)=>{
+        if(event.keyCode === 13){
+            ctrlAddItem();
+        };
+    });
+};
+    
 
     var ctrlAddItem = function(){
-        //console.log("Something happened");
+        
 
         // 1 . Get item from the input field 
-        console.log(UiCtrl.getInput());
+        var input = UiCtrl.getInput();
+       
 
         // 2. Add item to buget contoller
 
@@ -55,14 +93,13 @@ var controller = (function(bgtCtrl , UiCtrl){
         // 5. Add the budget to the UI
     }
     
-    document.querySelector(Dom.btn).addEventListener('click', ctrlAddItem);
-
-    document.addEventListener('keypress' , (event)=>{
-        if(event.keyCode === 13){
-            ctrlAddItem();
+    //Function initiated at the begining
+    return{
+        init : function(){
+            console.log('Function has started');
+            EventListeners();
         }
-        
-    })
+    }
     
 
 })(budgetController , UiController);
