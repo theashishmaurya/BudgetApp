@@ -66,7 +66,9 @@ var UiController = (function(){
         type : '.add__type',
         description : '.add__description',
         value : '.add__value',
-        btn : '.add__btn'
+        btn : '.add__btn',
+        incomeContainer: '.income__list',
+        expensesContainer: '.expenses__list'
         
     }
    
@@ -81,6 +83,27 @@ var UiController = (function(){
                 getValue : document.querySelector(DomString.value).value
             
             };
+        },
+        addListItem : function(obj , type){
+            var html , newhtml ,element;
+            //Create HTML string with placeholder text
+            if (type === 'inc'){
+                element = DomString.incomeContainer;
+            html = '<div class="item clearfix" id="inc-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
+            }
+            else if (type === 'exp'){
+                element = DomString.expensesContainer;
+            html = '<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button> </div></div></div>'
+            }
+            //Replace the placeholder text with some actual data
+            newhtml = html.replace('%id%' , obj.id);
+            newhtml = newhtml.replace('%description%' , obj.description)
+            newhtml = newhtml.replace('%value%' , obj.value)
+
+            // Insert the HTML into DOM
+            document.querySelector(element).insertAdjacentHTML('beforeend' , newhtml);
+
+
         },
         //Function to make the DomString Global
         PublicDomString : function(){
@@ -116,6 +139,7 @@ var controller = (function(bgtCtrl , UiCtrl){
          newItem = bgtCtrl.addItem(input.getType, input.getDescription , input.getValue);
 
         // 3. Add item to UI 
+        UiCtrl.addListItem(newItem , input.getType);
 
         // 4. Calculate the budget 
 
