@@ -105,6 +105,22 @@ var UiController = (function(){
 
 
         },
+        //Function for clearing the input fields
+
+        clearInput : function(){
+                var field , fieldArr ;
+                field = document.querySelectorAll(DomString.description + ','+DomString.value);
+
+                fieldArr = Array.prototype.slice.call(field); // converting list to array
+
+                //For changing each value to null or " "
+                fieldArr.forEach(function(current , index , array){
+                    current.value = "";
+                    
+                });
+
+                fieldArr[0].focus();
+        },
         //Function to make the DomString Global
         PublicDomString : function(){
             return DomString;
@@ -140,6 +156,9 @@ var controller = (function(bgtCtrl , UiCtrl){
 
         // 3. Add item to UI 
         UiCtrl.addListItem(newItem , input.getType);
+
+        //3.5 Clear the Input fields
+        UiCtrl.clearInput();
 
         // 4. Calculate the budget 
 
