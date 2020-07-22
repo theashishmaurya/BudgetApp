@@ -80,7 +80,7 @@ var UiController = (function(){
             return{
                 getType  : document.querySelector(DomString.type).value,
                 getDescription : document.querySelector(DomString.description).value,
-                getValue : document.querySelector(DomString.value).value
+                getValue : parseFloat(document.querySelector(DomString.value).value)
             
             };
         },
@@ -143,6 +143,14 @@ var controller = (function(bgtCtrl , UiCtrl){
     });
 };
     
+    var updateBudget = function(){
+        // 1. Calculate the budget 
+
+        // 2. Return the budget
+
+        // 3. Add the budget to the UI
+        
+    }
 
     var ctrlAddItem = function(){
         var input , newItem ;
@@ -150,19 +158,26 @@ var controller = (function(bgtCtrl , UiCtrl){
         // 1 . Get item from the input field 
          input = UiCtrl.getInput();
        
+        if(input.getDescription !=="" && !isNaN(input.getValue) && input.getValue > 0 ){
 
         // 2. Add item to buget contoller
          newItem = bgtCtrl.addItem(input.getType, input.getDescription , input.getValue);
 
-        // 3. Add item to UI 
-        UiCtrl.addListItem(newItem , input.getType);
+         // 3. Add item to UI 
+         UiCtrl.addListItem(newItem , input.getType);
+ 
+         //3.5 Clear the Input fields
+         UiCtrl.clearInput();
+ 
+         // 4. Update the budget
+         updateBudget() ;
 
-        //3.5 Clear the Input fields
-        UiCtrl.clearInput();
-
-        // 4. Calculate the budget 
-
-        // 5. Add the budget to the UI
+        }
+        else{
+            UiCtrl.clearInput();
+            alert("Wrong Input");
+        }
+        
     }
     
     //Function initiated at the begining
