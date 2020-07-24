@@ -92,7 +92,7 @@ var budgetController = (function(){
                 totalExp : data.totals.exp
             }
         },
-//git
+
         testing : function(){
             console.log(data);
         }
@@ -112,7 +112,8 @@ var UiController = (function(){
         budgetLabel : '.budget__value',
         incomeLabel : '.budget__income--value',
         expenseLabel : '.budget__expenses--value',
-        expensePercentage : '.budget__expenses--percentage'
+        expensePercentage : '.budget__expenses--percentage',
+        parentContainer : '.container'
         
     }
    
@@ -200,6 +201,7 @@ var controller = (function(bgtCtrl , UiCtrl){
             ctrlAddItem();
         };
     });
+    document.querySelector(Dom.parentContainer).addEventListener('click' ,ctrlDeleteItem)
 };
     
     var updateBudget = function(){
@@ -239,6 +241,24 @@ var controller = (function(bgtCtrl , UiCtrl){
             alert("Wrong Input");
         }
         
+    }
+    
+    var ctrlDeleteItem = function(e){
+        var item , splitItem , itemType , itemId;
+
+        item = e.target.parentNode.parentNode.parentNode.parentNode.id;
+        //console.log(item);
+
+        if(item){
+            splitItem = item.split('-');
+            itemType = splitItem[0];
+            itemId = splitItem[1];
+        }
+       // console.log(splitItem ,itemType , itemId);
+
+        
+
+
     }
     
     //Function initiated at the begining
