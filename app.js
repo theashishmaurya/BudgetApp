@@ -92,7 +92,7 @@ var budgetController = (function(){
                 totalExp : data.totals.exp
             }
         },
-
+//git
         testing : function(){
             console.log(data);
         }
