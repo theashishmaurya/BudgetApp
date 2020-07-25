@@ -65,6 +65,22 @@ var budgetController = (function(){
 
         },
 
+        deleteBudget : function(type , id){
+            var IdArr , index ;
+             IdArr = data.allItems[type].map(function(current){
+                return current.id;
+            });
+
+            index = IdArr.indexOf(id);
+
+            if(index !== -1){
+                data.allItems[type].splice(index , 1) ;
+            }
+
+
+
+        },
+
         calculateBudget : function(){
             
              // Calculate total income and expense
@@ -150,6 +166,12 @@ var UiController = (function(){
 
 
         },
+        //Function to delete item 
+        deleteListItem : function(selectorId){
+            var el = document.getElementById(selectorId);
+            el.parentNode.removeChild(el);
+
+        },
         //Function for clearing the input fields
 
         clearInput : function(){
@@ -201,7 +223,7 @@ var controller = (function(bgtCtrl , UiCtrl){
             ctrlAddItem();
         };
     });
-    document.querySelector(Dom.parentContainer).addEventListener('click' ,ctrlDeleteItem)
+    document.querySelector(Dom.parentContainer).addEventListener('click' ,ctrlDeleteItem);
 };
     
     var updateBudget = function(){
@@ -212,7 +234,7 @@ var controller = (function(bgtCtrl , UiCtrl){
         var budget = bgtCtrl.getBudget();
 
         // 3. Add the budget to the UI
-        UiCtrl.displayBudget(bgtCtrl.getBudget());
+        UiCtrl.displayBudget(budget);
     }
 
     var ctrlAddItem = function(){
@@ -252,15 +274,24 @@ var controller = (function(bgtCtrl , UiCtrl){
         if(item){
             splitItem = item.split('-');
             itemType = splitItem[0];
-            itemId = splitItem[1];
+            itemId = parseInt(splitItem[1]);
         }
        // console.log(splitItem ,itemType , itemId);
+
+       // 1. Delete item from the DataStructure
+        bgtCtrl.deleteBudget(itemType , itemId);
+       // bgtCtrl.testing();
+       // 2. Delete the item from the UI
+        UiCtrl.deleteListItem(item);
+
+        // 3. Update the budget
+        updateBudget();
 
         
 
 
     }
-    
+   
     //Function initiated at the begining
     return{
         init : function(){
