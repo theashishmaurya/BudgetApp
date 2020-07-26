@@ -245,7 +245,7 @@ var UiController = (function(){
 
         displayPercentages : function(percentage){
             var field = document.querySelectorAll(DomString.expensePerc); // field is a list
-            
+
             var nodeListForEach = function (list , callback){
                 for (var i = 0 ; i < list.length ; i++){
                     callback(list[i],i);
@@ -392,3 +392,4 @@ var controller = (function(bgtCtrl , UiCtrl){
 })(budgetController , UiController);
 
 controller.init();
+// Project is kinda Done
